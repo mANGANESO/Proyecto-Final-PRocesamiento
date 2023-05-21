@@ -1,5 +1,8 @@
 from PIL import Image
 import numpy as np
+from Decodificacion import Decodificacion 
+
+
 
 class Codificacion:
     def __init__(self):
@@ -44,23 +47,12 @@ class Codificacion:
         bloque_codificado = np.dot(self.hamming_matrix, bloque) % 2
         return bloque_codificado.tolist()
 
-def Decodificacion(codificacion):
-    hamming_matrix_p = np.linalg.pinv(Codificacion().hamming_matrix)
-    decodificacion = []
-    num_bloques = len(codificacion) // 7
-
-    for i in range(num_bloques):
-        bloque_codificado = codificacion[i * 7 : (i + 1) * 7]
-        bloque_decodificado = np.dot(hamming_matrix_p, bloque_codificado) % 2
-        decodificacion.extend(bloque_decodificado[:4].tolist())
-
-    return decodificacion
 
 # Ejemplo de uso
 imagen_path = 'Mickey_Mouse.png'
 codificador = Codificacion()
 codificacion = codificador.codificar_imagen(imagen_path)
-print("Codificación:", codificacion)
+#print("Codificación:", codificacion)
 
 decodificacion = Decodificacion(codificacion)
-print("Decodificación:", decodificacion)
+
