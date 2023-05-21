@@ -50,9 +50,11 @@ class Codificacion:
 
 # Ejemplo de uso
 imagen_path = 'Mickey_Mouse.png'
+imagen_original = Image.open(imagen_path)
+imagen_original.show()
 codificador = Codificacion()
 codificacion = codificador.codificar_imagen(imagen_path)
-#print("Codificación:", codificacion)
-
+print("Codificación:", codificacion)
+#Manda a la funcion decodificacion
 decodificacion = Decodificacion(codificacion)
 
