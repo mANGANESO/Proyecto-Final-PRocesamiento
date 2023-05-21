@@ -1,6 +1,17 @@
 import numpy as np
 from PIL import Image
+import serial
+import time
 
+
+# Conectando por serial a Arduino
+print("Conectando al Arduino...")
+arduino = serial.Serial('COM3', 9600, timeout = 3.0)
+arduino.isOpen();
+print("Conectado al Arduino.")
+Mensaje = arduino.readline()
+print("Mensaje recibido en python:", Mensaje)
+    
 class CodificacionM:
     def __init__(self):
         self.hamming_matrix = np.array([
@@ -12,11 +23,10 @@ class CodificacionM:
             [0, 0, 1, 0],
             [0, 0, 0, 1]
         ])
-        
-      
+            
 class Decodificacion():
-    def __init__(self, codificacion):
-        self.codificacion = codificacion
+    def __init__(self):
+        codificacion = Mensaje
         hamming_matrix_p = np.linalg.pinv(CodificacionM().hamming_matrix)
         decodificacion = []
         num_bloques = len(codificacion) // 7

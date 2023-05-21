@@ -1,8 +1,14 @@
 from PIL import Image
 import numpy as np
 from Decodificacion import Decodificacion 
+import serial
+import time
 
-
+# Conectando por serial a Arduino
+print("Conectando al Arduino...")
+arduino = serial.Serial('COM3', 9600, timeout = 3.0)
+arduino.isOpen();
+print("Arduino Conectado.")
 
 class Codificacion:
     def __init__(self):
@@ -14,7 +20,8 @@ class Codificacion:
             [0, 1, 0, 0],
             [0, 0, 1, 0],
             [0, 0, 0, 1]
-        ])
+        ]) 
+    
 
     def codificar_imagen(self, imagen_path):
         imagen_bn = self.convertir_a_bn(imagen_path)
@@ -55,6 +62,9 @@ imagen_original.show()
 codificador = Codificacion()
 codificacion = codificador.codificar_imagen(imagen_path)
 print("Codificación:", codificacion)
+arduino.sleep(2)
+arduino.write(codificacion)
+arduino.close()
 #Manda a la funcion decodificacion
-decodificacion = Decodificacion(codificacion)
+#decodificacion = Decodificacion(codificacion) Envia mensaje a la clase Decodificacion
 
